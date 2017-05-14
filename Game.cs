@@ -6,8 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Moggle.Comm;
 using Moggle.Controles;
 using Moggle.Screens;
-using MonoGame.Extended.InputListeners;
-using Moggle.Textures;
+using MonoGame.Extended.Input.InputListeners;
 
 namespace Moggle
 {
@@ -15,20 +14,20 @@ namespace Moggle
 	/// Clase global de un juego.
 	/// </summary>
 	public class Game :
-	Microsoft.Xna.Framework.Game, 
-	IEmisor<KeyboardEventArgs>,				// Para enviar señales de teclado a componentes
-	IComponentContainerComponent<IControl>	// Para controlar sus componentes
+	Microsoft.Xna.Framework.Game,
+	IEmisor<KeyboardEventArgs>,             // Para enviar señales de teclado a componentes
+	IComponentContainerComponent<IControl>  // Para controlar sus componentes
 	{
 		/// <summary>
 		/// La pantalla mostrada actualmente
 		/// </summary>
 		public IScreen CurrentScreen
-		{ 
+		{
 			get
-			{ 
+			{
 				try
 				{
-					return ScreenManager.ActiveThread.Current; 
+					return ScreenManager.ActiveThread.Current;
 				}
 				catch (InvalidOperationException)
 				{
@@ -90,7 +89,7 @@ namespace Moggle
 				MouseListener);
 
 			Components.Add (InputListener);
-			
+
 		}
 
 		/// <summary>
@@ -113,12 +112,12 @@ namespace Moggle
 		/// </summary>
 		protected override void Initialize ()
 		{
+			LoadContent ();
 			foreach (var x in Components)
 				x.Initialize ();
 			CurrentScreen?.Initialize ();
 			base.Initialize ();
 
-			LoadContent ();
 			KeyListener.KeyPressed += keyPressed;
 		}
 
@@ -143,8 +142,8 @@ namespace Moggle
 		protected virtual void MandarSeñal (KeyboardEventArgs key)
 		{
 			var sign = new Tuple<KeyboardEventArgs, ScreenThread> (
-				           key,
-				           ScreenManager.ActiveThread);
+							key,
+							ScreenManager.ActiveThread);
 			CurrentScreen?.RecibirSeñal (sign);
 		}
 

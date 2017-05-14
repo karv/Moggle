@@ -1,7 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended;
-using MonoGame.Extended.Shapes;
 using Microsoft.Xna.Framework.Input;
 
 namespace Moggle.Controles
@@ -27,18 +25,17 @@ namespace Moggle.Controles
 		/// Devuelve la textura usada.
 		/// </summary>
 		public Texture2D Textura { get; protected set; }
-
 		/// <summary>
 		/// Devuelve el límite gráfico del control.
 		/// </summary>
-		protected override IShapeF GetBounds ()
+		protected override Rectangle GetBounds ()
 		{
-			return new RectangleF (Pos.ToVector2 (), (SizeF)Tamaño);
+			return new Rectangle (Pos.X, Pos.Y, Tamaño.Width, Tamaño.Height);
 		}
 
 		Rectangle GetOffsetBounds ()
 		{
-			return new Rectangle ((Pos + OffSet), Tamaño);
+			return new Rectangle ((Pos + OffSet), new Point (Tamaño.Width, Tamaño.Height));
 		}
 
 		readonly SpriteBatch drawBatch;
@@ -64,8 +61,10 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Devuelve un valor determinando si el ratón está habilitado para esta aplicación.
 		/// </summary>
-		public bool Habilitado {
-			get {
+		public bool Habilitado
+		{
+			get
+			{
 				return Textura != null || !string.IsNullOrWhiteSpace (ArchivoTextura);
 			}
 		}
@@ -74,11 +73,14 @@ namespace Moggle.Controles
 		/// Devuelve o establece la posición actual del apuntador del ratón.
 		/// </summary>
 		/// <value>The position.</value>
-		public static Point Pos {
-			get {
-				return Microsoft.Xna.Framework.Input.Mouse.GetState ().Position;
+		public static Point Pos
+		{
+			get
+			{
+				return Mouse.GetState ().Position;
 			}
-			set {
+			set
+			{
 				Mouse.SetPosition (value.X, value.Y);
 			}
 		}
@@ -87,9 +89,9 @@ namespace Moggle.Controles
 		/// Se ejecuta antes del ciclo, pero después de saber un poco sobre los controladores.
 		/// No invoca LoadContent por lo que es seguro agregar componentes
 		/// </summary>
-		protected override void ForceInitialization ()
+		protected override void Initialize ()
 		{
-			base.ForceInitialization ();
+			base.Initialize ();
 			var displ = Game.GraphicsDevice.Adapter.CurrentDisplayMode;
 			Pos = new Point (displ.Width / 2, displ.Height / 2);
 		}
@@ -97,7 +99,7 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Devuelve el tamaño del apuntador.
 		/// </summary>
-		public readonly Size Tamaño;
+		public readonly CE.Size Tamaño;
 
 		/// <summary>
 		/// Update lógico
@@ -111,6 +113,14 @@ namespace Moggle.Controles
 
 		#region Memoria
 
+		/// <summary>
+		/// Loads the content using a given manager
+		/// </summary>
+		/// <param name="manager">Manager.</param>
+		protected override void LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
+		{
+			Textura = Textura ?? manager.Load<Texture2D> (ArchivoTextura);
+		}
 
 		#endregion
 
@@ -120,7 +130,7 @@ namespace Moggle.Controles
 		/// </summary>
 		/// <param name="gm">Pantalla</param>
 		/// <param name="tamaño">Tamaño del icono del cursor.</param>
-		public Ratón (Game gm, Size tamaño)
+		public Ratón (Game gm, CE.Size tamaño)
 			: base (gm)
 		{
 			Tamaño = tamaño;
@@ -133,7 +143,7 @@ namespace Moggle.Controles
 		public Ratón (Game gm)
 			: base (gm)
 		{
-			Tamaño = new Size (20, 20);
+			Tamaño = new CE.Size (20, 20);
 			drawBatch = Game.GetNewBatch ();
 		}
 

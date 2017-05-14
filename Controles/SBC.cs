@@ -2,8 +2,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Moggle.Screens;
-using MonoGame.Extended.Shapes;
-using Inputs = MonoGame.Extended.InputListeners;
 
 namespace Moggle.Controles
 {
@@ -31,13 +29,6 @@ namespace Moggle.Controles
 		public IComponentContainerComponent<IControl> Container { get; }
 
 		/// <summary>
-		/// Prioridad de dibujo;
-		/// Mayor prioridad se dibuja en la cima
-		/// </summary>
-		[Obsolete]
-		public int Prioridad { get; set; }
-
-		/// <summary>
 		/// Loads the content using a given manager
 		/// </summary>
 		protected virtual void LoadContent (ContentManager manager)
@@ -56,28 +47,26 @@ namespace Moggle.Controles
 		public bool IsInitialized { get; private set; }
 
 		/// <summary>
-		/// Initialize this component, avoiding multiple calls
+		/// Se ejecuta antes del ciclo, pero después de saber un poco sobre los controladores.
+		/// No invoca LoadContent por lo que es seguro agregar componentes
 		/// </summary>
+		protected virtual void Initialize ()
+		{
+			IsInitialized = true;
+		}
+
 		void IGameComponent.Initialize ()
 		{
 			if (!IsInitialized)
-				ForceInitialization ();
-		}
-
-		/// <summary>
-		/// Initializes the component
-		/// </summary>
-		protected virtual void ForceInitialization ()
-		{
-			IsInitialized = true;
+				Initialize ();
 		}
 
 		/// <summary>
 		/// Devuelve el límite gráfico del control.
 		/// </summary>
-		protected abstract IShapeF GetBounds ();
+		protected abstract Rectangle GetBounds ();
 
-		IShapeF ISpaceable.GetBounds ()
+		Rectangle ISpaceable.GetBounds ()
 		{
 			return GetBounds ();
 		}
