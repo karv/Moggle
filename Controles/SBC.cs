@@ -2,8 +2,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Moggle.Screens;
-using MonoGame.Extended.Shapes;
-using Inputs = MonoGame.Extended.InputListeners;
 
 namespace Moggle.Controles
 {
@@ -66,9 +64,9 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Devuelve el límite gráfico del control.
 		/// </summary>
-		protected abstract IShapeF GetBounds ();
+		protected abstract Rectangle GetBounds ();
 
-		IShapeF ISpaceable.GetBounds ()
+		Rectangle ISpaceable.GetBounds ()
 		{
 			return GetBounds ();
 		}

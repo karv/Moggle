@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Comm;
 using Moggle.Controles;
-using MonoGame.Extended.InputListeners;
+using MonoGame.Extended.Input.InputListeners;
 
 namespace Moggle.Screens
 {
@@ -37,9 +37,9 @@ namespace Moggle.Screens
 
 		#region Listeners
 
-		KeyboardListener KeyListener{ get { return Juego.KeyListener; } }
+		KeyboardListener KeyListener { get { return Juego.KeyListener; } }
 
-		MouseListener MouseListener{ get { return Juego.MouseListener; } }
+		MouseListener MouseListener { get { return Juego.MouseListener; } }
 
 		/// <summary>
 		/// El observador del ratón
@@ -84,7 +84,7 @@ namespace Moggle.Screens
 		}
 
 		/// <summary>
-		/// Releases all resource used by the childrends of this <see cref="Moggle.Screens.Screen"/>
+		/// Releases all resource used by the childrends of this <see cref="Screen"/>
 		/// </summary>
 		protected void DisposeChildren ()
 		{
@@ -145,10 +145,10 @@ namespace Moggle.Screens
 		/// <param name="thread">Thread donde ejecutar</param>
 		/// <param name="opt">Opciones</param>
 		public void Execute (ScreenThread thread,
-		                     ScreenThread.ScreenStackOptions opt)
+							 ScreenThread.ScreenStackOptions opt)
 		{
 			if (thread == null)
-				throw new ArgumentNullException ("thread");
+				throw new ArgumentNullException (nameof (thread));
 			Prepare ();
 			thread.Stack (this, opt);
 		}
@@ -183,7 +183,7 @@ namespace Moggle.Screens
 		/// Devuelve el color de fondo.
 		/// </summary>
 		/// <value>The color of the background.</value>
-		public virtual Color? BgColor{ get { return null; } }
+		public virtual Color? BgColor { get { return null; } }
 
 		/// <summary>
 		/// Inicializa esta panatalla si es necesario
@@ -342,7 +342,7 @@ namespace Moggle.Screens
 		#region ctor
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Moggle.Screens.Screen"/> class.
+		/// Initializes a new instance of the <see cref="Screen"/> class.
 		/// </summary>
 		/// <param name="game">Game.</param>
 		protected Screen (Game game)

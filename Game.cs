@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Moggle.Comm;
 using Moggle.Controles;
 using Moggle.Screens;
-using MonoGame.Extended.InputListeners;
+using MonoGame.Extended.Input.InputListeners;
 
 namespace Moggle
 {
@@ -14,20 +14,20 @@ namespace Moggle
 	/// Clase global de un juego.
 	/// </summary>
 	public class Game :
-	Microsoft.Xna.Framework.Game, 
-	IEmisor<KeyboardEventArgs>,				// Para enviar señales de teclado a componentes
-	IComponentContainerComponent<IControl>	// Para controlar sus componentes
+	Microsoft.Xna.Framework.Game,
+	IEmisor<KeyboardEventArgs>,             // Para enviar señales de teclado a componentes
+	IComponentContainerComponent<IControl>  // Para controlar sus componentes
 	{
 		/// <summary>
 		/// La pantalla mostrada actualmente
 		/// </summary>
 		public IScreen CurrentScreen
-		{ 
+		{
 			get
-			{ 
+			{
 				try
 				{
-					return ScreenManager.ActiveThread.Current; 
+					return ScreenManager.ActiveThread.Current;
 				}
 				catch (InvalidOperationException)
 				{
@@ -67,6 +67,30 @@ namespace Moggle
 		/// Batch de dibujo
 		/// </summary>
 		public SpriteBatch Batch { get; private set; }
+
+		/// <summary>
+		/// </summary>
+		public Game ()
+		{
+			Graphics = new GraphicsDeviceManager (this);
+			Content.RootDirectory = "Content";
+
+			ScreenManager = new ScreenThreadManager ();
+
+			TargetElapsedTime = TimeSpan.FromMilliseconds (7);
+			IsFixedTimeStep = false;
+
+			// Crear los listeners
+			KeyListener = new KeyboardListener ();
+			MouseListener = new MouseListener ();
+			InputListener = new InputListenerComponent (
+				this,
+				KeyListener,
+				MouseListener);
+
+			Components.Add (InputListener);
+
+		}
 
 		/// <summary>
 		/// Gets the container.
@@ -118,8 +142,8 @@ namespace Moggle
 		protected virtual void MandarSeñal (KeyboardEventArgs key)
 		{
 			var sign = new Tuple<KeyboardEventArgs, ScreenThread> (
-				           key,
-				           ScreenManager.ActiveThread);
+							key,
+							ScreenManager.ActiveThread);
 			CurrentScreen?.RecibirSeñal (sign);
 		}
 
@@ -241,28 +265,5 @@ namespace Moggle
 		}
 
 		#endregion
-
-		/// <summary>
-		/// </summary>
-		public Game ()
-		{
-			Graphics = new GraphicsDeviceManager (this);
-			Content.RootDirectory = "Content";
-
-			ScreenManager = new ScreenThreadManager ();
-
-			TargetElapsedTime = TimeSpan.FromMilliseconds (7);
-			IsFixedTimeStep = false;
-
-			// Crear los listeners
-			KeyListener = new KeyboardListener ();
-			MouseListener = new MouseListener ();
-			InputListener = new InputListenerComponent (
-				this,
-				KeyListener,
-				MouseListener);
-
-			Components.Add (InputListener);
-		}
 	}
 }

@@ -1,8 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended;
-using MonoGame.Extended.Shapes;
-using OpenTK.Input;
+using Microsoft.Xna.Framework.Input;
 
 namespace Moggle.Controles
 {
@@ -27,18 +25,17 @@ namespace Moggle.Controles
 		/// Devuelve la textura usada.
 		/// </summary>
 		public Texture2D Textura { get; protected set; }
-
 		/// <summary>
 		/// Devuelve el límite gráfico del control.
 		/// </summary>
-		protected override IShapeF GetBounds ()
+		protected override Rectangle GetBounds ()
 		{
-			return new RectangleF (Pos.ToVector2 (), (SizeF)Tamaño);
+			return new Rectangle (Pos.X, Pos.Y, Tamaño.Width, Tamaño.Height);
 		}
 
 		Rectangle GetOffsetBounds ()
 		{
-			return new Rectangle ((Pos + OffSet), Tamaño);
+			return new Rectangle ((Pos + OffSet), new Point (Tamaño.Width, Tamaño.Height));
 		}
 
 		readonly SpriteBatch drawBatch;
@@ -80,7 +77,7 @@ namespace Moggle.Controles
 		{
 			get
 			{
-				return Microsoft.Xna.Framework.Input.Mouse.GetState ().Position;
+				return Mouse.GetState ().Position;
 			}
 			set
 			{
@@ -102,7 +99,7 @@ namespace Moggle.Controles
 		/// <summary>
 		/// Devuelve el tamaño del apuntador.
 		/// </summary>
-		public readonly Size Tamaño;
+		public readonly CE.Size Tamaño;
 
 		/// <summary>
 		/// Update lógico
@@ -133,7 +130,7 @@ namespace Moggle.Controles
 		/// </summary>
 		/// <param name="gm">Pantalla</param>
 		/// <param name="tamaño">Tamaño del icono del cursor.</param>
-		public Ratón (Game gm, Size tamaño)
+		public Ratón (Game gm, CE.Size tamaño)
 			: base (gm)
 		{
 			Tamaño = tamaño;
@@ -146,7 +143,7 @@ namespace Moggle.Controles
 		public Ratón (Game gm)
 			: base (gm)
 		{
-			Tamaño = new Size (20, 20);
+			Tamaño = new CE.Size (20, 20);
 			drawBatch = Game.GetNewBatch ();
 		}
 

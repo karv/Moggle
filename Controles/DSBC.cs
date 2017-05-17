@@ -1,7 +1,6 @@
 using System;
 using Microsoft.Xna.Framework;
-using MonoGame.Extended.InputListeners;
-using Inputs = MonoGame.Extended.InputListeners;
+using MonoGame.Extended.Input.InputListeners;
 
 namespace Moggle.Controles
 {
@@ -35,11 +34,9 @@ namespace Moggle.Controles
 		/// El orden de dibujo
 		/// </summary>
 		/// <value>The draw order.</value>
-		public int DrawOrder
-		{
-			get{ return _drawOrder; }
-			set
-			{
+		public int DrawOrder {
+			get { return _drawOrder; }
+			set {
 				if (_drawOrder != value)
 					DrawOrderChanged?.Invoke (this, EventArgs.Empty);
 				_drawOrder = value;
@@ -76,7 +73,6 @@ namespace Moggle.Controles
 		{
 			Game.MouseListener.MouseClicked += check_click;
 			Game.MouseListener.MouseDoubleClicked += check_2click;
-			base.Initialize ();
 		}
 
 		/// <summary>

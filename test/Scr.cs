@@ -5,11 +5,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using Moggle.Screens;
 using Moggle.Textures;
-using MonoGame.Extended.InputListeners;
-using MonoGame.Extended.Shapes;
 using Moggle.Screens.Dials;
 using MonoGame.Extended.BitmapFonts;
-using MonoGame.Extended;
+using MonoGame.Extended.Input.InputListeners;
 
 namespace Test
 {
@@ -27,16 +25,16 @@ namespace Test
 					Color.Black,
 					Color.White
 				};
-				ret.SetData<Color> (_data);
+				ret.SetData (_data);
 				return ret;
 			}
 		}
 
 		SimpleTextures textures;
 
-		Texture2D [] solids = new Texture2D[4];
-		Texture2D [] alts = new Texture2D[4];
-		Texture2D [] outlines = new Texture2D[5];
+		Texture2D [] solids = new Texture2D [4];
+		Texture2D [] alts = new Texture2D [4];
+		Texture2D [] outlines = new Texture2D [5];
 
 		void buildTextures ()
 		{
@@ -44,61 +42,61 @@ namespace Test
 			var altColor = new [] { Color.White, Color.Black };
 			alts [0] =
 				textures.AlternatingTexture (
-				new Size (1, 1),
+				new CE.Size (1, 1),
 				altColor);
 			alts [1] =
 				textures.AlternatingTexture (
-				new Size (5, 5),
+				new CE.Size (5, 5),
 				altColor);
 			alts [2] =
 				textures.AlternatingTexture (
-				new Size (50, 20),
+				new CE.Size (50, 20),
 				altColor);
 			alts [3] =
 				textures.AlternatingTexture (
-				new Size (50, 100),
+				new CE.Size (50, 100),
 				altColor);
-			
+
 			#endregion
 			#region Solid
-			solids [0] = 
+			solids [0] =
 				textures.AlternatingTexture (
-				new Size (1, 1),
+				new CE.Size (1, 1),
 				altColor);
-			solids [1] = 
+			solids [1] =
 				textures.SolidTexture (
-				new Size (5, 5),
+				new CE.Size (5, 5),
 				Color.White);
-			solids [2] = 
+			solids [2] =
 				textures.SolidTexture (
-				new Size (5, 100),
+				new CE.Size (5, 100),
 				Color.White);
-			solids [3] = 
+			solids [3] =
 				textures.SolidTexture (
-				new Size (100, 100),
+				new CE.Size (100, 100),
 				Color.White);
 
 			#endregion
 			#region Outline
 			outlines [0] =
 				textures.OutlineTexture (
-				new Size (1, 1),
+				new CE.Size (1, 1),
 				Color.White);
 			outlines [1] =
 				textures.OutlineTexture (
-				new Size (3, 3),
+				new CE.Size (3, 3),
 				Color.White);
 			outlines [2] =
 				textures.OutlineTexture (
-				new Size (100, 3),
+				new CE.Size (100, 3),
 				Color.White);
 			outlines [3] =
 				textures.OutlineTexture (
-				new Size (6, 6),
+				new CE.Size (6, 6),
 				Color.White);
 			outlines [4] =
 				textures.OutlineTexture (
-				new Size (20, 20),
+				new CE.Size (20, 20),
 				Color.White);
 			#endregion
 		}
@@ -120,7 +118,7 @@ namespace Test
 			met.Add (
 				Content.Load<BitmapFont> ("cont//font"),
 				"hi III", Color.Green, textures.OutlineTexture (
-				new Size (10, 10), Color.White, Color.Red), Color.White
+				new CE.Size (10, 10), Color.White, Color.Red), Color.White
 			);
 			met.NumEntradasMostrar = 2;
 			met.EspacioEntreLineas = 3;
@@ -128,12 +126,12 @@ namespace Test
 
 			buildTextures ();
 
-			bt = new Botón (this, new RectangleF (100, 100, 50, 50), outlines [0]);
+			bt = new Botón (this, new Rectangle (100, 100, 50, 50), outlines [0]);
 			bt.Color = Color.Green;
 
 			bt = new Botón (
 				this,
-				new RectangleF (155, 100, 50, 50),
+				new Rectangle (155, 100, 50, 50),
 				outlines [0]);
 			bt.Color = Color.Green;
 			bt.AlClick += delegate
@@ -161,7 +159,7 @@ namespace Test
 				Posición = new Point (410, 250)
 			};
 			AddComponent (singleEt);
-				
+
 			MouseObserver.RatónEncima += (sender, e) => Debug.WriteLine (
 				"Mouse ahora sobre {0}",
 				e.ObservedObject);
@@ -172,7 +170,7 @@ namespace Test
 
 			var ct = new ContenedorSelección<FlyingSprite> (this, solids [0])
 			{
-				GridSize = new Size (4, 4),
+				GridSize = new CE.Size (4, 4),
 				MargenExterno = new MargenType
 				{
 					Top = 3,
@@ -188,7 +186,7 @@ namespace Test
 					Bot = 2
 				},
 				BgColor = Color.Gray * 0.3f,
-				TamañoBotón = new Size (12, 12),
+				TamañoBotón = new CE.Size (12, 12),
 				Posición = new Point (5, 5),
 				SelectionEnabled = true
 			};
@@ -197,8 +195,7 @@ namespace Test
 			var bts = new FlyingSprite [numBot];
 			for (int i = 0; i < numBot; i++)
 			{
-				bts [i] = new FlyingSprite (solids [0])
-				{ Color = Color.PaleVioletRed * 0.8f };
+				bts [i] = new FlyingSprite (solids [0]) { Color = Color.PaleVioletRed * 0.8f };
 
 				ct.Add (bts [i]);
 			}
@@ -223,10 +220,10 @@ namespace Test
 					Top = 2,
 					Bot = 2
 				},
-				TamañoBotón = new Size (20, 20),
+				TamañoBotón = new CE.Size (20, 20),
 				BgColor = Color.Black,
 				Posición = new Point (400, 5),
-				GridSize = new Size (4, 4),
+				GridSize = new CE.Size (4, 4),
 				TipoOrden = TipoOrdenEnum.FilaPrimero
 			};
 			for (int i = 0; i < 4; i++)
@@ -255,7 +252,7 @@ namespace Test
 				Juego.Exit ();
 				return true;
 			}
-			else if (key.Key == Microsoft.Xna.Framework.Input.Keys.T)
+			if (key.Key == Microsoft.Xna.Framework.Input.Keys.T)
 			{
 				var ser = new ScreenDialSerial ();
 
@@ -264,7 +261,7 @@ namespace Test
 				ser.AddRequest (new RedBlueDial (Juego, 0));
 
 				ser.Executar (Juego.ScreenManager.ActiveThread);
-				ser.HayRespuesta += delegate(object sender, object [] e)
+				ser.HayRespuesta += delegate (object sender, object [] e)
 				{
 					Debug.WriteLine (e);
 				};
