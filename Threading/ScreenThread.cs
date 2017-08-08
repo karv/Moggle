@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using System.Linq;
+using Microsoft.Xna.Framework;
+using Moggle.Screens;
 
 namespace Moggle.Threading
 {
@@ -14,7 +15,7 @@ namespace Moggle.Threading
 		/// <summary>
 		/// Gets the ordered invocation list.
 		/// </summary>
-		public IReadOnlyList<IScreen> Screens => _screens.Select (z => z.Screen).Reverse ().ToArray ();
+		public IReadOnlyList<Screens.IScreen> Screens => _screens.Select (z => z.Screen).Reverse ().ToArray ();
 
 		/// <summary>
 		/// </summary>
