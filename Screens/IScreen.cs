@@ -1,9 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace Moggle
+namespace Moggle.Screens
 {
 	/// <summary>
-	/// A screen
+	/// A screen that draws and updates
 	/// </summary>
 	public interface IScreen
 	{

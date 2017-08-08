@@ -3,7 +3,7 @@
 namespace Moggle.Threading
 {
 	/// <summary>
-	/// Specifies how a <see cref="ScreenThread"/> uses lower <see cref="IScreen"/>.
+	/// Specifies how a <see cref="ScreenThread"/> uses lower <see cref="Screens.IScreen"/>.
 	/// </summary>
 	[Flags]
 	public enum ThreadIterationMethod

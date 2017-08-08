@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using System.Linq;
+using Microsoft.Xna.Framework;
+using Moggle.Screens;
 
 namespace Moggle.Threading
 {
@@ -11,16 +12,20 @@ namespace Moggle.Threading
 	{
 		readonly List<ScreenCallStatus> _screens;
 
+		public Color BackgroundColor = Color.Black;
+		public readonly Game Game;
+
 		/// <summary>
 		/// Gets the ordered invocation list.
 		/// </summary>
-		public IReadOnlyList<IScreen> Screens => _screens.Select (z => z.Screen).Reverse ().ToArray ();
+		public IReadOnlyList<Screens.IScreen> Screens => _screens.Select (z => z.Screen).Reverse ().ToArray ();
 
 		/// <summary>
 		/// </summary>
-		public ScreenThread ()
+		internal ScreenThread (Game game)
 		{
 			_screens = new List<ScreenCallStatus> ();
+			Game = game;
 		}
 
 		/// <summary>
@@ -40,6 +45,7 @@ namespace Moggle.Threading
 		/// </summary>
 		public void DrawRecursively ()
 		{
+			Game.GraphicsDevice.Clear (BackgroundColor);
 			for (int i = _screens.Count - 1; i >= 0; i--)
 			{
 				_screens [i].Screen.Draw ();
