@@ -21,7 +21,7 @@ namespace Moggle.Threading
 			}
 		}
 
-		public void DrawRecursively (GameTime time)
+		public void DrawRecursively ()
 		{
 			for (int i = _screens.Count - 1; i >= 0; i--)
 			{
