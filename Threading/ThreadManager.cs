@@ -11,9 +11,9 @@ namespace Moggle.Threading
 		/// </summary>
 		public ScreenThread ActiveThread { get; private set; }
 
-		internal ThreadManager ()
+		internal ThreadManager (Game game)
 		{
-			ActiveThread = new ScreenThread ();
+			ActiveThread = new ScreenThread (game);
 		}
 	}
 }

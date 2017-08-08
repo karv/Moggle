@@ -16,7 +16,7 @@ namespace Moggle
 		/// </summary>
 		public Game ()
 		{
-			Threads = new ThreadManager ();
+			Threads = new ThreadManager (this);
 		}
 	}
 }

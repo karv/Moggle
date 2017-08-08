@@ -12,6 +12,9 @@ namespace Moggle.Threading
 	{
 		readonly List<ScreenCallStatus> _screens;
 
+		public Color BackgroundColor = Color.Black;
+		public readonly Game Game;
+
 		/// <summary>
 		/// Gets the ordered invocation list.
 		/// </summary>
@@ -19,9 +22,10 @@ namespace Moggle.Threading
 
 		/// <summary>
 		/// </summary>
-		public ScreenThread ()
+		internal ScreenThread (Game game)
 		{
 			_screens = new List<ScreenCallStatus> ();
+			Game = game;
 		}
 
 		/// <summary>
@@ -41,6 +45,7 @@ namespace Moggle.Threading
 		/// </summary>
 		public void DrawRecursively ()
 		{
+			Game.GraphicsDevice.Clear (BackgroundColor);
 			for (int i = _screens.Count - 1; i >= 0; i--)
 			{
 				_screens [i].Screen.Draw ();
