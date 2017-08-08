@@ -62,7 +62,7 @@ Un juego de controles para MonoGame</Description>
   <ItemGroup>
     <Compile Include="Game.cs" />
     <Compile Include="Threading\ThreadManager.cs" />
-    <Compile Include="Threading\Thread.cs" />
+    <Compile Include="Threading\ScreenThread.cs" />
     <Compile Include="IScreen.cs" />
     <Compile Include="Threading\ThreadIterationMethod.cs" />
   </ItemGroup>
