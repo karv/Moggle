@@ -10,10 +10,10 @@ namespace Moggle.Screens
 		/// <summary>
 		/// Updates this screen and its components.
 		/// </summary>
-		void Update (GameTime gameTime);
+		void Update(GameTime gameTime);
 		/// <summary>
 		/// Draws this screen and its components.
 		/// </summary>
-		void Draw ();
+		void Draw();
 	}
 }

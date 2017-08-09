@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Moggle.Screens;
@@ -25,6 +26,7 @@ namespace Moggle.Threading
 		/// </summary>
 		public IReadOnlyList<IScreen> Screens => _screens.Select(z => z.Screen).Reverse().ToArray();
 
+		internal bool _disposed { get; private set; }
 		/// <summary>
 		/// </summary>
 		internal ScreenThread(Game game)
@@ -75,6 +77,12 @@ namespace Moggle.Threading
 		{
 			if (scr == null) throw new System.ArgumentNullException(nameof(scr));
 			_screens.Add(new ScreenCallStatus { Screen = scr, Iter = iterMethod });
+		}
+
+		internal void Dispose()
+		{
+			foreach (var c in _screens.Select(z => z.Screen).OfType<IDisposable>()) c.Dispose();
+			_disposed = true;
 		}
 
 		class ScreenCallStatus
