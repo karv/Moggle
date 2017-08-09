@@ -10,6 +10,9 @@ namespace Moggle.Controls
 
 		MouseListener _mouseListener;
 
+		public Rectangle Bounds;
+
+
 		protected ClickableControl(MouseListener mouse)
 		{
 			_mouseListener = mouse ?? throw new ArgumentNullException(nameof(mouse));
@@ -28,7 +31,11 @@ namespace Moggle.Controls
 			_mouseListener.MouseClicked += Mouse_MouseClicked;
 		}
 
-		void Mouse_MouseClicked(object sender, MouseEventArgs e) => OnClick(e);
+		void Mouse_MouseClicked(object sender, MouseEventArgs e)
+		{
+			if (Bounds.Contains(e.Position))
+				OnClick(e);
+		}
 
 		protected abstract void OnClick(MouseEventArgs e);
 

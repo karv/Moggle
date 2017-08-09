@@ -1,34 +1,25 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.Input.InputListeners;
 
 namespace Moggle.Controls
 {
-	public class Button : IGameComponent, IDrawable
+	public class Button : ClickableControl, IDrawable
 	{
-		bool _isInitialized;
+		readonly MouseListener _mouseListener;
+		readonly Texture2D _texture;
 
-		MouseListener _mouseListener;
-
-		public Button(MouseListener mouse)
+		public Button(MouseListener mouse, Texture2D texture) : base(mouse)
 		{
-			_mouseListener = mouse ?? throw new ArgumentNullException(nameof(mouse));
+			_texture = texture;
 		}
 
-		public Rectangle Bounds;
+		protected override void OnClick(MouseEventArgs e) => Clicked?.Invoke(this, e);
 
-
-		void IGameComponent.Initialize()
+		public void Draw(SpriteBatch batch)
 		{
-			if (_isInitialized) return;
-
-			_isInitialized = true;
-			_mouseListener.MouseClicked += Mouse_MouseClicked;
-		}
-
-		void Mouse_MouseClicked(object sender, MouseEventArgs e)
-		{
-			Clicked?.Invoke(this, e);
+			batch.Draw(_texture, Bounds, Color.White);
 		}
 
 		public event EventHandler Clicked;
