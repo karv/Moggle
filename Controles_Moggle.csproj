@@ -45,18 +45,28 @@ Un juego de controles para MonoGame</Description>
     <Reference Include="System" />
     <Reference Include="MonoGame.Framework">
       <HintPath>packages\MonoGame.Framework.DesktopGL.3.6.0.1625\lib\net40\MonoGame.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="CE">
-      <HintPath>packages\CE.core.0.2.1\lib\CE.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="MonoGame.Extended">
       <HintPath>packages\MonoGame.Extended.0.6.568\lib\portable-net45+win8+wpa81\MonoGame.Extended.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="MonoGame.Extended.Input">
       <HintPath>packages\MonoGame.Extended.Input.0.6.568\lib\portable-net45+win8+wpa81\MonoGame.Extended.Input.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="MonoGame.Extended.Graphics">
+      <HintPath>packages\MonoGame.Extended.Graphics.0.6.568\lib\portable-net45+win8+wpa81\MonoGame.Extended.Graphics.dll</HintPath>
+    </Reference>
+    <Reference Include="NVorbis">
+      <HintPath>packages\NVorbis.0.8.5.0\lib\NVorbis.dll</HintPath>
+    </Reference>
+    <Reference Include="CE">
+      <HintPath>packages\CE.core.0.2.1\lib\CE.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -68,10 +78,13 @@ Un juego de controles para MonoGame</Description>
     <Compile Include="Screens\Screen.cs" />
     <Compile Include="Screens\ScreenBase.cs" />
     <Compile Include="IDrawable.cs" />
+    <Compile Include="Controls\Button.cs" />
+    <Compile Include="Controls\ClickableControl.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Threading\" />
     <Folder Include="Screens\" />
+    <Folder Include="Controls\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
@@ -87,4 +100,8 @@ Un juego de controles para MonoGame</Description>
     </MonoDevelop>
   </ProjectExtensions>
   <Import Project="packages\NuGet.Build.Packaging.0.1.324\build\NuGet.Build.Packaging.targets" Condition="Exists('packages\NuGet.Build.Packaging.0.1.324\build\NuGet.Build.Packaging.targets')" />
+  <ItemGroup>
+    <None Include="MonoGame.Framework.dll.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
 </Project>
