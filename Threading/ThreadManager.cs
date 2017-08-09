@@ -1,4 +1,7 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace Moggle.Threading
 {
 	/// <summary>
@@ -10,10 +13,50 @@ namespace Moggle.Threading
 		/// Gets the actve thread.
 		/// </summary>
 		public ScreenThread ActiveThread { get; private set; }
+		readonly HashSet<ScreenThread> _managedThreads;
+		Game _game;
 
-		internal ThreadManager (Game game)
+		public IReadOnlyCollection<ScreenThread> ManagedThreads => _managedThreads.ToArray();
+
+		internal ThreadManager(Game game)
 		{
-			ActiveThread = new ScreenThread (game);
+			_game = game;
+			_managedThreads = new HashSet<ScreenThread>();
+			CreateAndSwitch();
+		}
+
+		public ScreenThread Create()
+		{
+			var ret = new ScreenThread(_game);
+			_managedThreads.Add(ret);
+			return ret;
+		}
+
+		public ScreenThread CreateAndSwitch()
+		{
+			var ret = new ScreenThread(_game);
+			_managedThreads.Add(ret);
+			ActiveThread = ret;
+			return ret;
+		}
+
+		public void Switch(ScreenThread thread)
+		{
+			if (thread._disposed) throw new ObjectDisposedException("Cannot switch to disposed thread.");
+			ActiveThread = thread;
+		}
+
+		public void Destroy(ScreenThread thread)
+		{
+			if (thread == ActiveThread) throw new InvalidOperationException("Cannot destroy active thread.");
+			if (thread._disposed) return;
+			thread.Dispose();
+			_managedThreads.Remove(thread);
+		}
+
+		internal void Dispose()
+		{
+			foreach (var thread in _managedThreads) Destroy(thread);
 		}
 	}
 }
