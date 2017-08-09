@@ -19,6 +19,9 @@ namespace Moggle
 			Threads = new ThreadManager(this);
 		}
 
+		/// <summary>
+		/// Dispose the game.
+		/// </summary>
 		protected override void Dispose(bool disposing)
 		{
 			Threads.Dispose();
