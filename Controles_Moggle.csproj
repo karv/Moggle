@@ -78,7 +78,7 @@ Un juego de controles para MonoGame</Description>
     <Compile Include="Screens\Screen.cs" />
     <Compile Include="Screens\ScreenBase.cs" />
     <Compile Include="IDrawable.cs" />
-    <Compile Include="Screens\IMouseListenerScreen.cs" />
+    <Compile Include="Controls\Button.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Threading\" />
