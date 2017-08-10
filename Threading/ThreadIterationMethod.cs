@@ -11,11 +11,11 @@ namespace Moggle.Threading
 		/// <summary>
 		/// Draw the next screen
 		/// </summary>
-		DrawBase,
+		DrawBase = 0x0001,
 		/// <summary>
 		/// Updates the next screen
 		/// </summary>
-		UpdateBase,
+		UpdateBase = 0x0002,
 		/// <summary>
 		/// Draw and updates next screen.
 		/// </summary>
@@ -23,7 +23,7 @@ namespace Moggle.Threading
 		/// <summary>
 		/// All base screen are ignored.
 		/// </summary>
-		IgnoreBottom = 0,
+		IgnoreBottom = 0x0000,
 		/// <summary>
 		/// Draw base, but do not update.
 		/// </summary>
