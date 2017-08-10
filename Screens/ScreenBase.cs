@@ -11,6 +11,10 @@ namespace Moggle.Screens
 	/// </summary>
 	public abstract class ScreenBase : IScreen
 	{
+		/// <summary>
+		/// Gets a value indicating whether this <see cref="T:Moggle.Screens.ScreenBase"/> is initialized.
+		/// </summary>
+		/// <value><c>true</c> if is initialized; otherwise, <c>false</c>.</value>
 		protected bool IsInitialized { get; private set; }
 		/// <summary>
 		/// The components
@@ -47,6 +51,10 @@ namespace Moggle.Screens
 			DoInitialization();
 		}
 
+		/// <summary>
+		/// Executes the initialization.
+		/// This method is controlled by the <see cref="IsInitialized"/> flag, so it will only be called once.
+		/// </summary>
 		protected virtual void DoInitialization()
 		{
 			Batch = new SpriteBatch(Game.GraphicsDevice);
