@@ -61,21 +61,24 @@ namespace Moggle.Threading
 		}
 
 		/// <summary>
-		/// Stacks a new screen
+		/// Initializes and stacks a specified screen into this thread ignoring the bottom screens.
 		/// </summary>
 		public void Stack(IScreen scr)
 		{
-			Stack(scr, new ThreadIterationMethod());
+			if (scr == null) throw new ArgumentNullException(nameof(scr));
+			scr.Initialize();
+			Stack(scr, ThreadIterationMethod.IgnoreBottom);
 		}
 
 		/// <summary>
-		/// Stack a new screen with the specified options
+		/// Initializes and stack a specified screen with the specified options.
 		/// </summary>
 		/// <param name="scr">Screen</param>
 		/// <param name="iterMethod">Iteration method</param>
 		public void Stack(IScreen scr, ThreadIterationMethod iterMethod)
 		{
-			if (scr == null) throw new System.ArgumentNullException(nameof(scr));
+			if (scr == null) throw new ArgumentNullException(nameof(scr));
+			scr.Initialize();
 			_screens.Add(new ScreenCallStatus { Screen = scr, Iter = iterMethod });
 		}
 

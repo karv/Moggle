@@ -11,7 +11,11 @@ namespace Moggle.Screens
 	/// </summary>
 	public abstract class ScreenBase : IScreen
 	{
-		bool _isInitialized;
+		/// <summary>
+		/// Gets a value indicating whether this <see cref="T:Moggle.Screens.ScreenBase"/> is initialized.
+		/// </summary>
+		/// <value><c>true</c> if is initialized; otherwise, <c>false</c>.</value>
+		protected bool IsInitialized { get; private set; }
 		/// <summary>
 		/// The components
 		/// </summary>
@@ -31,42 +35,51 @@ namespace Moggle.Screens
 		protected SpriteBatch Batch { get; private set; }
 
 		/// <param name="game">Game.</param>
-		protected ScreenBase (Game game)
+		protected ScreenBase(Game game)
 		{
-			Game = game ?? throw new System.ArgumentNullException (nameof (game));
-			Components = new GameComponentCollection ();
+			Game = game ?? throw new System.ArgumentNullException(nameof(game));
+			Components = new GameComponentCollection();
 		}
 
 		/// <summary>
 		/// Initialize this screen
 		/// </summary>
-		public void Initialize ()
+		public void Initialize()
 		{
-			if (_isInitialized) return;
-			_isInitialized = true;
-			Batch = new SpriteBatch (Game.GraphicsDevice);
+			if (IsInitialized) return;
+			IsInitialized = true;
+			DoInitialization();
+		}
+
+		/// <summary>
+		/// Executes the initialization.
+		/// This method is controlled by the <see cref="IsInitialized"/> flag, so it will only be called once.
+		/// </summary>
+		protected virtual void DoInitialization()
+		{
+			Batch = new SpriteBatch(Game.GraphicsDevice);
 			foreach (var z in Components)
-				z.Initialize ();
+				z.Initialize();
 		}
 
 		/// <summary>
 		/// Draws this screen and its components.
 		/// </summary>
-		public virtual void Draw ()
+		public virtual void Draw()
 		{
-			Batch.Begin (transformMatrix: ScreenViewport?.GetScaleMatrix () ?? null);
-			foreach (var z in Components.OfType<IDrawable> ())
-				z.Draw (Batch);
-			Batch.End ();
+			Batch.Begin(transformMatrix: ScreenViewport?.GetScaleMatrix() ?? null);
+			foreach (var z in Components.OfType<IDrawable>())
+				z.Draw(Batch);
+			Batch.End();
 		}
 
 		/// <summary>
 		/// Updates this screen and its components.
 		/// </summary>
-		public virtual void Update (GameTime gameTime)
+		public virtual void Update(GameTime gameTime)
 		{
-			foreach (var z in Components.OfType<IUpdate> ())
-				z.Update (gameTime);
+			foreach (var z in Components.OfType<IUpdate>())
+				z.Update(gameTime);
 		}
 	}
 }
