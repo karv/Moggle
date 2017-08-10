@@ -5,7 +5,7 @@ namespace Moggle.Screens
 	/// <summary>
 	/// A screen that draws and updates
 	/// </summary>
-	public interface IScreen
+	public interface IScreen : IGameComponent
 	{
 		/// <summary>
 		/// Updates this screen and its components.
