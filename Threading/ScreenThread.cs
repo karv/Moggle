@@ -20,7 +20,10 @@ namespace Moggle.Threading
 		/// The game class.
 		/// </summary>
 		public readonly Game Game;
-
+		/// <summary>
+		/// Gets the top most screen on the stack.
+		/// </summary>
+		public IScreen TopmostScreen => _screens[_screens.Count - 1].Screen;
 		/// <summary>
 		/// Gets the ordered invocation list.
 		/// </summary>
@@ -80,6 +83,14 @@ namespace Moggle.Threading
 			if (scr == null) throw new ArgumentNullException(nameof(scr));
 			scr.Initialize();
 			_screens.Add(new ScreenCallStatus { Screen = scr, Iter = iterMethod });
+		}
+
+		/// <summary>
+		/// Terminates the topmost screen and returns to the next screen in the stack.
+		/// </summary>
+		public void TerminateLast()
+		{
+			_screens.RemoveAt(_screens.Count - 1);
 		}
 
 		internal void Dispose()
