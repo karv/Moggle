@@ -23,7 +23,7 @@ Global
 		{4FA90EAC-D24E-43C9-AA1E-525D10A91C75}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		version = 1.0
+		version = 1.0.0.1
 		Policies = $0
 		$0.TextStylePolicy = $1
 		$1.FileWidth = 110

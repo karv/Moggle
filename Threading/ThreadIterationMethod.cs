@@ -23,7 +23,7 @@ namespace Moggle.Threading
 		/// <summary>
 		/// All base screen are ignored.
 		/// </summary>
-		Default = 0,
+		IgnoreBottom = 0,
 		/// <summary>
 		/// Draw base, but do not update.
 		/// </summary>
