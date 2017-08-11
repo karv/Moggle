@@ -45,8 +45,9 @@ namespace Moggle.Threading
 		{
 			for (int i = _screens.Count - 1; i >= 0; i--)
 			{
+				var updateBelow = _screens[i].Iter.HasFlag(ThreadIterationMethod.UpdateBase);
 				_screens[i].Screen.Update(time);
-				if (!_screens[i].Iter.HasFlag(ThreadIterationMethod.UpdateBase)) return;
+				if (!updateBelow) return;
 			}
 		}
 
