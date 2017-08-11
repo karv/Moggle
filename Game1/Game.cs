@@ -1,6 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Diagnostics;
+using Microsoft.Xna.Framework;
 using Moggle.Screens;
-using System.Diagnostics;
 using OpenTK.Input;
 
 namespace Civo
