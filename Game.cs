@@ -1,5 +1,5 @@
-﻿using Moggle.Threading;
-using Moggle.Screens;
+﻿using Moggle.Screens;
+using Moggle.Threading;
 
 namespace Moggle
 {
