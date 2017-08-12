@@ -10,15 +10,15 @@ namespace Moggle.Screens
 		/// <summary>
 		/// The keyboard listener.
 		/// </summary>
-		public readonly KeyboardListener KeyboardListener;
+		public KeyboardListener KeyboardListener { get; private set; }
 		/// <summary>
 		/// The mouse listener.
 		/// </summary>
-		public readonly MouseListener MouseListener;
+		public MouseListener MouseListener { get; private set; }
 		/// <summary>
 		/// The listener component
 		/// </summary>
-		public readonly InputListenerComponent ListenerComponent;
+		public InputListenerComponent ListenerComponent { get; }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="T:Moggle.Screens.ListenerScreen"/> class.
@@ -31,11 +31,24 @@ namespace Moggle.Screens
 									 KeyboardListenerSettings keySettings = null)
 			: base(game)
 		{
-			MouseListener = mouseSettings == null ? new MouseListener() : new MouseListener(mouseSettings);
-			KeyboardListener = keySettings == null ? new KeyboardListener() : new KeyboardListener(keySettings);
-			ListenerComponent = new InputListenerComponent(game, MouseListener, KeyboardListener);
+			ListenerComponent = new InputListenerComponent(game);
 
 			Components.Add(ListenerComponent);
+		}
+
+
+		/// <summary>
+		/// Construct the listeners.
+		/// This method is controlled by the <see cref="P:Moggle.Screens.ScreenBase.IsInitialized" /> flag, so
+		/// it will only be called once.
+		/// </summary>
+		protected override void DoInitialization()
+		{
+			base.DoInitialization();
+			MouseListener = new MouseListener(ScreenViewport);
+			KeyboardListener = new KeyboardListener();
+			ListenerComponent.Listeners.Add(MouseListener);
+			ListenerComponent.Listeners.Add(KeyboardListener);
 		}
 	}
 }
