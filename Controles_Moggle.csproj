@@ -13,10 +13,10 @@
 Un juego de controles para MonoGame</Description>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ReleaseVersion>1.0.0.4</ReleaseVersion>
+    <ReleaseVersion>1.0.1</ReleaseVersion>
     <PackOnBuild>true</PackOnBuild>
     <PackageId>Moggle</PackageId>
-    <PackageVersion>1.0.0.4</PackageVersion>
+    <PackageVersion>1.0.1</PackageVersion>
     <Authors>Edgar Carballo</Authors>
     <Owners>Edgar Carballo</Owners>
     <PackageTags>monogame</PackageTags>
