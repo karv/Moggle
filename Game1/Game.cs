@@ -2,62 +2,51 @@
 using Microsoft.Xna.Framework;
 using Moggle.Screens;
 using OpenTK.Input;
+using Moggle.Controls;
+using MonoGame.Extended.Input.InputListeners;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Civo
 {
-	class DebugScreen : Screen
-	{
-		public readonly string Name;
-		public DebugScreen(Game game, string name) : base(game)
-		{
-			Name = name;
-		}
-
-		protected override void DoInitialization()
-		{
-			base.DoInitialization();
-			Debug.WriteLine("Initialized " + Name);
-		}
-
-		public override void Update(GameTime gameTime)
-		{
-			Debug.WriteLine("Update " + Name);
-			base.Update(gameTime);
-			if (Keyboard.GetState().IsAnyKeyDown)
-				Game.Threads.ActiveThread.TerminateLast();
-		}
-	}
-
 	/// <summary>
 	/// This is the main type for your game.
 	/// </summary>
 	public class Game : Moggle.Game
 	{
-		Screen _scr1;
-		Screen _scr2;
+		ListenerScreen _scr1;
 		GraphicsDeviceManager _graphics;
+		Texture2D _solidTexture;
 
 		/// <summary>
 		/// </summary>
 		public Game()
 		{
 			_graphics = new GraphicsDeviceManager(this);
+			IsMouseVisible = true;
 		}
 		/// <summary>
 		/// Initialize this instance.
 		/// </summary>
 		protected override void Initialize()
 		{
-			_scr1 = new DebugScreen(this, "1");
-			_scr2 = new DebugScreen(this, "2");
+			_solidTexture = new Texture2D(GraphicsDevice, 1, 1);
+			_solidTexture.SetData(new[] { Color.White });
+
+			_scr1 = new ListenerScreen(this);
+			var ctrl = new Button(_scr1.MouseListener, _solidTexture) { Bounds = new Rectangle(0, 0, 100, 100) };
+			ctrl.Clicked += delegate
+			{
+				Debug.Write("Click");
+			};
+			_scr1.Components.Add(ctrl);
+
 			_graphics.IsFullScreen = false;
 			Content.RootDirectory = "Content";
 
 			var thr = Threads.CreateAndSwitch();
-			thr.BackgroundColor = Color.AliceBlue;
+			thr.BackgroundColor = Color.Red;
 
 			thr.Stack(_scr1);
-			thr.Stack(_scr2);
 			base.Initialize();
 		}
 	}

@@ -31,8 +31,8 @@ namespace Moggle.Screens
 									 KeyboardListenerSettings keySettings = null)
 			: base(game)
 		{
-			MouseListener = new MouseListener(mouseSettings);
-			KeyboardListener = new KeyboardListener(keySettings);
+			MouseListener = mouseSettings == null ? new MouseListener() : new MouseListener(mouseSettings);
+			KeyboardListener = keySettings == null ? new KeyboardListener() : new KeyboardListener(keySettings);
 			ListenerComponent = new InputListenerComponent(game, MouseListener, KeyboardListener);
 
 			Components.Add(ListenerComponent);

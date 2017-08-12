@@ -1,6 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using Moggle.Screens;
+using OpenTK.Input;
 namespace Civo
 {
 	[TestFixture]
