@@ -1,6 +1,6 @@
-﻿using Moggle.Screens;
+﻿using System;
+using Moggle.Screens;
 using Moggle.Threading;
-using System;
 
 namespace Moggle
 {
