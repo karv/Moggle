@@ -80,6 +80,7 @@ Un juego de controles para MonoGame</Description>
     <Compile Include="IDrawable.cs" />
     <Compile Include="Controls\Button.cs" />
     <Compile Include="Controls\ClickableControl.cs" />
+    <Compile Include="Screens\ListenerScreen.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Threading\" />

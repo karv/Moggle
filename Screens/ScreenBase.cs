@@ -67,10 +67,13 @@ namespace Moggle.Screens
 		/// </summary>
 		public virtual void Draw()
 		{
-			Batch.Begin(transformMatrix: ScreenViewport?.GetScaleMatrix() ?? null);
-			foreach (var z in Components.OfType<IDrawable>())
-				z.Draw(Batch);
-			Batch.End();
+			if (Game.IsActive)
+			{
+				Batch.Begin(transformMatrix: ScreenViewport?.GetScaleMatrix() ?? null);
+				foreach (var z in Components.OfType<IDrawable>())
+					z.Draw(Batch);
+				Batch.End();
+			}
 		}
 
 		/// <summary>
@@ -78,8 +81,9 @@ namespace Moggle.Screens
 		/// </summary>
 		public virtual void Update(GameTime gameTime)
 		{
-			foreach (var z in Components.OfType<IUpdate>())
-				z.Update(gameTime);
+			if (Game.IsActive)
+				foreach (var z in Components.OfType<IUpdate>())
+					z.Update(gameTime);
 		}
 	}
 }
