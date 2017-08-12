@@ -19,7 +19,7 @@ namespace Moggle.Screens
 		/// <summary>
 		/// The components
 		/// </summary>
-		protected readonly GameComponentCollection Components;
+		public readonly GameComponentCollection Components;
 		/// <summary>
 		/// The screen viewport. If set to null, no viewport will be used.
 		/// </summary>

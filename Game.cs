@@ -1,4 +1,5 @@
-﻿using Moggle.Threading;
+﻿using Moggle.Screens;
+using Moggle.Threading;
 
 namespace Moggle
 {
@@ -11,7 +12,10 @@ namespace Moggle
 		/// The screen threads manager for the game.
 		/// </summary>
 		public readonly ThreadManager Threads;
-
+		/// <summary>
+		/// Gets the current topmost screen.
+		/// </summary>
+		public IScreen CurrentScreen => Threads.ActiveThread.TopmostScreen;
 		/// <summary>
 		/// </summary>
 		public Game()
