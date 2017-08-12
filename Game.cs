@@ -1,5 +1,6 @@
 ﻿using Moggle.Screens;
 using Moggle.Threading;
+using System;
 
 namespace Moggle
 {
@@ -49,5 +50,19 @@ namespace Moggle
 			Threads.Dispose();
 			base.Dispose(disposing);
 		}
+
+		/// <summary>
+		/// Initialize the game.
+		/// </summary>
+		protected override void Initialize()
+		{
+			base.Initialize();
+			Initialized?.Invoke(this, EventArgs.Empty);
+		}
+
+		/// <summary>
+		/// Occurs when the game has completed the initialization.
+		/// </summary>
+		public event EventHandler Initialized;
 	}
 }
