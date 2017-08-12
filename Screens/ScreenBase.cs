@@ -1,8 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended.ViewportAdapters;
 using MonoGame.Extended;
+using MonoGame.Extended.ViewportAdapters;
 
 namespace Moggle.Screens
 {
@@ -19,7 +20,7 @@ namespace Moggle.Screens
 		/// <summary>
 		/// The components
 		/// </summary>
-		public readonly GameComponentCollection Components;
+		protected readonly GameComponentCollection Components;
 		/// <summary>
 		/// The screen viewport. If set to null, no viewport will be used.
 		/// </summary>
@@ -33,6 +34,11 @@ namespace Moggle.Screens
 		/// </summary>
 		/// <value>The batch.</value>
 		protected SpriteBatch Batch { get; private set; }
+
+		/// <summary>
+		/// Gets the component count.
+		/// </summary>
+		public int ComponentCount => Components.Count;
 
 		/// <param name="game">Game.</param>
 		protected ScreenBase(Game game)
@@ -52,6 +58,24 @@ namespace Moggle.Screens
 		}
 
 		/// <summary>
+		/// Add a component
+		/// </summary>
+		public void AddComponent(IGameComponent component)
+		{
+			Components.Add(component);
+			if (IsInitialized) component.Initialize();
+		}
+
+		/// <summary>
+		/// Remove and dispose a component
+		/// </summary>
+		public void DestroyComponents(IGameComponent component)
+		{
+			if (Components.Remove(component))
+				(component as IDisposable)?.Dispose();
+		}
+
+		/// <summary>
 		/// Executes the initialization.
 		/// This method is controlled by the <see cref="IsInitialized"/> flag, so it will only be called once.
 		/// </summary>
@@ -67,10 +91,13 @@ namespace Moggle.Screens
 		/// </summary>
 		public virtual void Draw()
 		{
-			Batch.Begin(transformMatrix: ScreenViewport?.GetScaleMatrix() ?? null);
-			foreach (var z in Components.OfType<IDrawable>())
-				z.Draw(Batch);
-			Batch.End();
+			if (Game.IsActive)
+			{
+				Batch.Begin(transformMatrix: ScreenViewport?.GetScaleMatrix() ?? null);
+				foreach (var z in Components.OfType<IDrawable>())
+					z.Draw(Batch);
+				Batch.End();
+			}
 		}
 
 		/// <summary>
@@ -78,8 +105,10 @@ namespace Moggle.Screens
 		/// </summary>
 		public virtual void Update(GameTime gameTime)
 		{
-			foreach (var z in Components.OfType<IUpdate>())
-				z.Update(gameTime);
+			if (Game.IsActive)
+				foreach (var z in Components.OfType<IUpdate>())
+					z.Update(gameTime);
 		}
+
 	}
 }

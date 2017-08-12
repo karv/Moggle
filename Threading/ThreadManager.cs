@@ -76,7 +76,8 @@ namespace Moggle.Threading
 
 		internal void Dispose()
 		{
-			foreach (var thread in _managedThreads) Destroy(thread);
+			foreach (var thread in _managedThreads.Where(thread => !thread._disposed))
+				thread.Dispose();
 		}
 	}
 }
