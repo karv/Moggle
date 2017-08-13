@@ -44,11 +44,11 @@ namespace Moggle.Screens
 		/// </summary>
 		protected override void DoInitialization()
 		{
-			base.DoInitialization();
 			MouseListener = new MouseListener(ScreenViewport);
 			KeyboardListener = new KeyboardListener();
 			ListenerComponent.Listeners.Add(MouseListener);
 			ListenerComponent.Listeners.Add(KeyboardListener);
+			base.DoInitialization();
 		}
 	}
 }
