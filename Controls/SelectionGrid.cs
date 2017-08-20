@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using Moggle.Controls;
-using MonoGame.Extended.Input.InputListeners;
+using CE.Collections.Selector;
 using Microsoft.Xna.Framework;
-using MonoGame.Extended;
+using Moggle.Controls;
 using Moggle.Screens;
+using MonoGame.Extended.Input.InputListeners;
 
 namespace Civo.Systems.Controls.General
 {
@@ -13,6 +13,7 @@ namespace Civo.Systems.Controls.General
 	/// </summary>
 	public class SelectionGrid<T> : ClickableControl
 	{
+		public readonly SelectionManager<T> Selection;
 		/// <summary>
 		/// The items.
 		/// </summary>
@@ -34,13 +35,23 @@ namespace Civo.Systems.Controls.General
 		/// <param name="mouse">Mouse.</param>
 		public SelectionGrid(MouseListener mouse) : base(mouse)
 		{
-			Items = new ItemCollection();
+			Items = new ItemCollection<T>();
+			Selection = new SelectionManager<T>(Items, new TrivialSelectionRestrain<T>());
+		}
+
+		/// <param name="mouse">Mouse.</param>
+		/// <param name="selRestrain">Selection restrain.</param>
+		public SelectionGrid(MouseListener mouse, ISelectionRestrain<T> selRestrain) : base(mouse)
+		{
+			Items = new ItemCollection<T>();
+			Selection = new SelectionManager<T>(Items, selRestrain);
 		}
 
 		/// <param name="screen">Screen.</param>
 		public SelectionGrid(ListenerScreen screen) : base(screen.MouseListener)
 		{
 			Items = new ItemCollection<T>();
+			Selection = new SelectionManager<T>(Items, new TrivialSelectionRestrain<T>());
 		}
 
 		/// <summary>
@@ -59,7 +70,37 @@ namespace Civo.Systems.Controls.General
 		/// Invoked when the object is clicked.
 		/// Determines which tile has been clicked.
 		/// </summary>
-		protected override void OnClick(MouseEventArgs e) { }
+		protected override void OnClick(MouseEventArgs e)
+		{
+			var rP = e.Position - Location; // the relative click poistion.
+			var tP = PointToTile(rP);
+			var clickindex = Items.GridToIndex(tP);
+
+			if (clickindex < Items.Count)
+				OnItemClicked(e, clickindex);
+		}
+
+		/// <summary>
+		/// Converts a relative position to a tile postion.
+		/// </summary>
+		public CE.Point PointToTile(Point p) => new CE.Point(p.X / TileSize.Width, p.Y / TileSize.Height);
+
+		/// <summary>
+		/// Invokes the <see cref="ItemClicked"/> event.
+		/// </summary>
+		/// <param name="e">Mouse state event args</param>
+		/// <param name="itemIndex">index of the clicked item.</param>
+		protected virtual void OnItemClicked(MouseEventArgs e, int itemIndex)
+		{
+			var item = Items[itemIndex];
+			Selection.ToggleSelection(item);
+			ItemClicked?.Invoke(this, item);
+		}
+
+		/// <summary>
+		/// Occurs when any item is clicked.
+		/// </summary>
+		public event EventHandler<T> ItemClicked;
 	}
 	public class ItemCollection<T> : Collection<T>
 	{
