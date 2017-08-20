@@ -1,5 +1,8 @@
 ﻿namespace Moggle.Controls
 {
+	/// <summary>
+	/// Specified the ordering in a grid structure.
+	/// </summary>
 	public enum LexicographicalOrder
 	{
 		/// <summary>

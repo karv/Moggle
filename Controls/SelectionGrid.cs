@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using CE.Collections.Selector;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controls;
 using Moggle.Screens;
 using MonoGame.Extended.Input.InputListeners;
-using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
 
 namespace Civo.Systems.Controls.General
 {
@@ -15,7 +15,10 @@ namespace Civo.Systems.Controls.General
 	public class SelectionGrid<T> : ClickableControl, Moggle.IDrawable
 	{
 		readonly List<Texture2D> _textures = new List<Texture2D>();
-		private Func<T, Texture2D> _textureSelector;
+		Func<T, Texture2D> _textureSelector;
+		/// <summary>
+		/// The selection manager.
+		/// </summary>
 		public readonly SelectionManager<T> Selection;
 		/// <summary>
 		/// The items.
@@ -67,6 +70,10 @@ namespace Civo.Systems.Controls.General
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets a value indicating whether this <see cref="T:Civo.Systems.Controls.General.SelectionGrid`1"/> 
+		/// allows selection.
+		/// </summary>
 		public bool AllowSelection
 		{
 			get => _allowSelection;
@@ -80,23 +87,35 @@ namespace Civo.Systems.Controls.General
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the texture selector.
+		/// </summary>
+		/// <value>The texture selector.</value>
 		public Func<T, Texture2D> TextureSelector
 		{
 			get => _textureSelector;
 			set
 			{
-				_textureSelector = value;
+				_textureSelector = value ?? throw new ArgumentNullException();
+				RebuildTextures();
 
 			}
 		}
 
-		public void RebuildTextures()
+		/// <summary>
+		/// Rebuilds the textures of the objects
+		/// </summary>
+		protected void RebuildTextures()
 		{
 			_textures.Clear();
 			for (int i = 0; i < Items.Count; i++)
 				_textures.Add(TextureSelector(Items[i]));
 		}
 
+
+		/// <summary>
+		/// Suscribes to <see cref="Items"/> events and build textures.
+		/// </summary>
 		protected override void Initialize()
 		{
 			base.Initialize();
