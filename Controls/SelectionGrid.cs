@@ -5,6 +5,7 @@ using Moggle.Controls;
 using Moggle.Screens;
 using MonoGame.Extended.Input.InputListeners;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 
 namespace Civo.Systems.Controls.General
 {
@@ -13,12 +14,13 @@ namespace Civo.Systems.Controls.General
 	/// </summary>
 	public class SelectionGrid<T> : ClickableControl, Moggle.IDrawable
 	{
-		public Func<T, Texture2D> TextureSelector;
+		readonly List<Texture2D> _textures = new List<Texture2D>();
+		private Func<T, Texture2D> _textureSelector;
 		public readonly SelectionManager<T> Selection;
 		/// <summary>
 		/// The items.
 		/// </summary>
-		public readonly GridItemCollection<T> Items;
+		public readonly GridItemCollection<T> Items = new GridItemCollection<T>();
 		/// <summary>
 		/// The topleft location.
 		/// </summary>
@@ -37,7 +39,6 @@ namespace Civo.Systems.Controls.General
 		/// <param name="mouse">Mouse.</param>
 		public SelectionGrid(MouseListener mouse) : base(mouse)
 		{
-			Items = new GridItemCollection<T>();
 			Selection = new SelectionManager<T>(Items, new TrivialSelectionRestrain<T>());
 		}
 
@@ -45,14 +46,12 @@ namespace Civo.Systems.Controls.General
 		/// <param name="selRestrain">Selection restrain.</param>
 		public SelectionGrid(MouseListener mouse, ISelectionRestrain<T> selRestrain) : base(mouse)
 		{
-			Items = new GridItemCollection<T>();
 			Selection = new SelectionManager<T>(Items, selRestrain);
 		}
 
 		/// <param name="screen">Screen.</param>
 		public SelectionGrid(ListenerScreen screen) : base(screen.MouseListener)
 		{
-			Items = new GridItemCollection<T>();
 			Selection = new SelectionManager<T>(Items, new TrivialSelectionRestrain<T>());
 		}
 
@@ -79,6 +78,30 @@ namespace Civo.Systems.Controls.General
 				if (value == false)
 					Selection.ClearSelection();
 			}
+		}
+
+		public Func<T, Texture2D> TextureSelector
+		{
+			get => _textureSelector;
+			set
+			{
+				_textureSelector = value;
+
+			}
+		}
+
+		public void RebuildTextures()
+		{
+			_textures.Clear();
+			for (int i = 0; i < Items.Count; i++)
+				_textures.Add(TextureSelector(Items[i]));
+		}
+
+		protected override void Initialize()
+		{
+			base.Initialize();
+			Items.CollectionChanged += (sender, e) => RebuildTextures();
+			RebuildTextures();
 		}
 
 		/// <summary>
@@ -126,10 +149,10 @@ namespace Civo.Systems.Controls.General
 			for (int i = 0; i < Items.Count; i++)
 			{
 				var outputRect = TileToRectangle(Items.IndexToGrid(i));
-				var texture = TextureSelector(Items[i]);
-				batch.Draw(texture, outputRect, Color.White);
+				batch.Draw(_textures[i], outputRect, Color.White);
 			}
 		}
+
 
 		/// <summary>
 		/// Occurs when any item is clicked.

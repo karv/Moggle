@@ -6,7 +6,7 @@ namespace Moggle.Controls
 	/// <summary>
 	/// A collection whose items can be accessed via 2-dim indexers.
 	/// </summary>
-	public class GridItemCollection<T> : Collection<T>
+	public class GridItemCollection<T> : ObservableCollection<T>
 	{
 		/// <summary>
 		/// The size of the grid.
