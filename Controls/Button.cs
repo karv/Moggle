@@ -12,6 +12,10 @@ namespace Moggle.Controls
 	{
 		readonly Texture2D _texture;
 
+		public Rectangle Location;
+
+		protected override Rectangle Bounds => Location;
+
 		/// <param name="mouse">Mouse listener of the <see cref="Screens.IScreen"/></param>
 		/// <param name="texture">The texture for the button</param>
 		public Button(MouseListener mouse, Texture2D texture) : base(mouse)
