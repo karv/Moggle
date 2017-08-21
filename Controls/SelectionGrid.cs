@@ -127,10 +127,9 @@ namespace Civo.Systems.Controls.General
 		/// Invoked when the object is clicked.
 		/// Determines which tile has been clicked.
 		/// </summary>
-		protected override void OnClick(MouseEventArgs e)
+		protected override void OnClick(ControlMouseEventArgs e)
 		{
-			var relClickPos = e.Position - Location;
-			var TilePos = PointToTile(relClickPos);
+			var TilePos = PointToTile(e.RelativePosition);
 			var clickIndex = Items.GridToIndex(TilePos);
 
 			if (clickIndex < Items.Count)
@@ -154,7 +153,7 @@ namespace Civo.Systems.Controls.General
 		/// </summary>
 		/// <param name="e">Mouse state event args</param>
 		/// <param name="itemIndex">index of the clicked item.</param>
-		protected virtual void OnItemClicked(MouseEventArgs e, int itemIndex)
+		protected virtual void OnItemClicked(ControlMouseEventArgs e, int itemIndex)
 		{
 			var item = Items[itemIndex];
 			if (AllowSelection)

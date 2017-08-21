@@ -33,7 +33,7 @@ namespace Moggle.Controls
 		/// Invoked when the object is clicked.
 		/// </summary>
 		/// <param name="e">Mouse event args</param>
-		protected override void OnClick(MouseEventArgs e) => Clicked?.Invoke(this, e);
+		protected override void OnClick(ControlMouseEventArgs e) => Clicked?.Invoke(this, e);
 
 
 		/// <summary>
@@ -47,6 +47,6 @@ namespace Moggle.Controls
 		/// <summary>
 		/// Ocurrs when the button is clicked.
 		/// </summary>
-		public event EventHandler Clicked;
+		public event EventHandler<ControlMouseEventArgs> Clicked;
 	}
 }
