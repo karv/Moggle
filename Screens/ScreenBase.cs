@@ -34,6 +34,9 @@ namespace Moggle.Screens
 		/// </summary>
 		/// <value>The batch.</value>
 		protected SpriteBatch Batch { get; private set; }
+		/// <summary>
+		/// Batch options.
+		/// </summary>
 		public BatchBeginOpts BatchOpts;
 
 		/// <summary>
