@@ -68,6 +68,10 @@ Un juego de controles para MonoGame</Description>
     <Reference Include="Newtonsoft.Json">
       <HintPath>packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="CE.Collections">
+      <HintPath>packages\CE.Collections.0.3.0.2\lib\net45\CE.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Game.cs" />
@@ -81,6 +85,10 @@ Un juego de controles para MonoGame</Description>
     <Compile Include="Controls\Button.cs" />
     <Compile Include="Controls\ClickableControl.cs" />
     <Compile Include="Screens\ListenerScreen.cs" />
+    <Compile Include="Controls\SelectionGrid.cs" />
+    <Compile Include="Controls\ProductOrdering.cs" />
+    <Compile Include="Controls\GridItemCollection.cs" />
+    <Compile Include="Screens\BatchBeginOpts.cs" />
     <Compile Include="Controls\ControlMouseEvent.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -93,10 +101,7 @@ Un juego de controles para MonoGame</Description>
     <MonoDevelop>
       <Properties>
         <Policies>
-          <DotNetNamingPolicy DirectoryNamespaceAssociation="PrefixedHierarchical" ResourceNamePolicy="FileName">
-            <inheritsSet />
-            <inheritsScope />
-          </DotNetNamingPolicy>
+          <DotNetNamingPolicy DirectoryNamespaceAssociation="PrefixedHierarchical" ResourceNamePolicy="FileName" />
         </Policies>
       </Properties>
     </MonoDevelop>

@@ -13,10 +13,11 @@ namespace Moggle.Controls
 
 		readonly MouseListener _mouseListener;
 
+		// THINK: Bounds be abstract getter?
 		/// <summary>
 		/// The bounds of the listening area.
 		/// </summary>
-		public Rectangle Bounds;
+		protected abstract Rectangle Bounds { get; }
 
 		/// <param name="mouse">Mouse listener of the <see cref="Screens.IScreen"/></param>
 		protected ClickableControl(MouseListener mouse)

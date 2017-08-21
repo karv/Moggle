@@ -34,6 +34,10 @@ namespace Moggle.Screens
 		/// </summary>
 		/// <value>The batch.</value>
 		protected SpriteBatch Batch { get; private set; }
+		/// <summary>
+		/// Batch options.
+		/// </summary>
+		public BatchBeginOpts BatchOpts;
 
 		/// <summary>
 		/// Gets the component count.
@@ -43,7 +47,7 @@ namespace Moggle.Screens
 		/// <param name="game">Game.</param>
 		protected ScreenBase(Game game)
 		{
-			Game = game ?? throw new System.ArgumentNullException(nameof(game));
+			Game = game ?? throw new ArgumentNullException(nameof(game));
 			Components = new GameComponentCollection();
 		}
 
@@ -82,6 +86,8 @@ namespace Moggle.Screens
 		protected virtual void DoInitialization()
 		{
 			Batch = new SpriteBatch(Game.GraphicsDevice);
+			BatchOpts = new BatchBeginOpts { Transformatrix = ScreenViewport.GetScaleMatrix };
+
 			foreach (var z in Components)
 				z.Initialize();
 		}
@@ -93,7 +99,7 @@ namespace Moggle.Screens
 		{
 			if (Game.IsActive)
 			{
-				Batch.Begin(transformMatrix: ScreenViewport?.GetScaleMatrix() ?? null);
+				BatchOpts.Begin(Batch);
 				foreach (var z in Components.OfType<IDrawable>())
 					z.Draw(Batch);
 				Batch.End();
@@ -109,6 +115,5 @@ namespace Moggle.Screens
 				foreach (var z in Components.OfType<IUpdate>())
 					z.Update(gameTime);
 		}
-
 	}
 }

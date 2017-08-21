@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controls;
 using Moggle.Screens;
 using MonoGame.Extended.ViewportAdapters;
+using Civo.Systems.Controls.General;
 
 namespace Civo
 {
@@ -23,30 +24,50 @@ namespace Civo
 			_graphics = new GraphicsDeviceManager(this);
 			IsMouseVisible = true;
 		}
+
+		Texture2D SingleColorTexture(Color color)
+		{
+			var ret = new Texture2D(GraphicsDevice, 1, 1);
+			ret.SetData(new[] { color });
+			return ret;
+		}
 		/// <summary>
 		/// Initialize this instance.
 		/// </summary>
 		protected override void Initialize()
 		{
 			base.Initialize();
-			_solidTexture = new Texture2D(GraphicsDevice, 1, 1);
-			_solidTexture.SetData(new[] { Color.White });
-
+			_solidTexture = SingleColorTexture(Color.White);
 			_scr1 = new ListenerScreen(this)
 			{ ScreenViewport = new ScalingViewportAdapter(GraphicsDevice, 100, 100) };
 			_scr1.Initialize();
-			var ctrl = new Button(_scr1.MouseListener, _solidTexture) { Bounds = new Rectangle(0, 0, 50, 50) };
+			var ctrl = new Button(_scr1.MouseListener, _solidTexture) { Location = new Rectangle(0, 0, 10, 10) };
+			var grid = new SelectionGrid<Color>(_scr1.MouseListener)
+			{
+				TextureSelector = SingleColorTexture,
+				Location = new Point(10, 0),
+				GridSize = new CE.Size(2, 2),
+				TileSize = new CE.Size(3, 3)
+			};
+			grid.Items.Add(Color.Red);
+			grid.Items.Add(Color.Green);
+			grid.Items.Add(Color.Blue);
 			ctrl.Clicked += delegate
 			{
 				Debug.Write("Click");
 			};
+			grid.ItemClicked += delegate (object sender, Color color)
+			{
+				Debug.WriteLine(color);
+			};
+			_scr1.AddComponent(grid);
 			_scr1.AddComponent(ctrl);
 
 			_graphics.IsFullScreen = false;
 			Content.RootDirectory = "Content";
 
 			var thr = Threads.CreateAndSwitch();
-			thr.BackgroundColor = Color.Red;
+			thr.BackgroundColor = Color.DarkGray;
 
 			thr.Stack(_scr1);
 		}
