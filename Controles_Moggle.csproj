@@ -9,18 +9,17 @@
     <RootNamespace>Moggle</RootNamespace>
     <AssemblyName>Controles_Moggle</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <Description>Controles MonoGame
-Un juego de controles para MonoGame</Description>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ReleaseVersion>1.0.1.1</ReleaseVersion>
+    <ReleaseVersion>1.0.2</ReleaseVersion>
     <PackOnBuild>true</PackOnBuild>
     <PackageId>Moggle</PackageId>
-    <PackageVersion>1.0.1.1</PackageVersion>
+    <PackageVersion>1.0.2</PackageVersion>
     <Authors>Edgar Carballo</Authors>
     <Owners>Edgar Carballo</Owners>
     <PackageTags>monogame</PackageTags>
     <Title>Controles Moggle</Title>
+    <Description>Extending Monogame</Description>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
