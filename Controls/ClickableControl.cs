@@ -13,10 +13,11 @@ namespace Moggle.Controls
 
 		readonly MouseListener _mouseListener;
 
+		// THINK: Bounds be abstract getter?
 		/// <summary>
 		/// The bounds of the listening area.
 		/// </summary>
-		public Rectangle Bounds;
+		protected abstract Rectangle Bounds { get; }
 
 		/// <param name="mouse">Mouse listener of the <see cref="Screens.IScreen"/></param>
 		protected ClickableControl(MouseListener mouse)
@@ -43,14 +44,21 @@ namespace Moggle.Controls
 		void Mouse_MouseClicked(object sender, MouseEventArgs e)
 		{
 			if (Bounds.Contains(e.Position))
-				OnClick(e);
+			{
+				var eArgs = new ControlMouseEventArgs
+				{
+					RelativePosition = e.Position - Bounds.Location,
+					MouseArgs = e
+				};
+				OnClick(eArgs);
+			}
 		}
 
 		/// <summary>
 		/// Invoked when the object is clicked.
 		/// </summary>
 		/// <param name="e">Mouse event args</param>
-		protected abstract void OnClick(MouseEventArgs e);
+		protected abstract void OnClick(ControlMouseEventArgs e);
 
 		void IDisposable.Dispose()
 		{

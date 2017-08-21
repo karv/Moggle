@@ -12,6 +12,16 @@ namespace Moggle.Controls
 	{
 		readonly Texture2D _texture;
 
+		/// <summary>
+		/// The location and size.
+		/// </summary>
+		public Rectangle Location;
+
+		/// <summary>
+		/// The bounds of the listening area.
+		/// </summary>
+		protected override Rectangle Bounds => Location;
+
 		/// <param name="mouse">Mouse listener of the <see cref="Screens.IScreen"/></param>
 		/// <param name="texture">The texture for the button</param>
 		public Button(MouseListener mouse, Texture2D texture) : base(mouse)
@@ -23,7 +33,7 @@ namespace Moggle.Controls
 		/// Invoked when the object is clicked.
 		/// </summary>
 		/// <param name="e">Mouse event args</param>
-		protected override void OnClick(MouseEventArgs e) => Clicked?.Invoke(this, e);
+		protected override void OnClick(ControlMouseEventArgs e) => Clicked?.Invoke(this, e);
 
 
 		/// <summary>
@@ -37,6 +47,6 @@ namespace Moggle.Controls
 		/// <summary>
 		/// Ocurrs when the button is clicked.
 		/// </summary>
-		public event EventHandler Clicked;
+		public event EventHandler<ControlMouseEventArgs> Clicked;
 	}
 }
