@@ -89,6 +89,7 @@ Un juego de controles para MonoGame</Description>
     <Compile Include="Controls\ProductOrdering.cs" />
     <Compile Include="Controls\GridItemCollection.cs" />
     <Compile Include="Screens\BatchBeginOpts.cs" />
+    <Compile Include="Controls\ControlMouseEvent.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Threading\" />

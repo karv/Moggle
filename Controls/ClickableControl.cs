@@ -44,14 +44,21 @@ namespace Moggle.Controls
 		void Mouse_MouseClicked(object sender, MouseEventArgs e)
 		{
 			if (Bounds.Contains(e.Position))
-				OnClick(e);
+			{
+				var eArgs = new ControlMouseEventArgs
+				{
+					RelativePosition = e.Position - Bounds.Location,
+					MouseArgs = e
+				};
+				OnClick(eArgs);
+			}
 		}
 
 		/// <summary>
 		/// Invoked when the object is clicked.
 		/// </summary>
 		/// <param name="e">Mouse event args</param>
-		protected abstract void OnClick(MouseEventArgs e);
+		protected abstract void OnClick(ControlMouseEventArgs e);
 
 		void IDisposable.Dispose()
 		{
