@@ -163,14 +163,12 @@ namespace Civo.Systems.Controls.General
 
 		void Moggle.IDrawable.Draw(SpriteBatch batch)
 		{
-			// TODO: store the textures in a hidden field.
 			for (int i = 0; i < Items.Count; i++)
 			{
 				var outputRect = TileToRectangle(Items.IndexToGrid(i));
 				batch.Draw(_textures[i], outputRect, Color.White);
 			}
 		}
-
 
 		/// <summary>
 		/// Occurs when any item is clicked.
