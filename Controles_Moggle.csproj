@@ -88,6 +88,7 @@ Un juego de controles para MonoGame</Description>
     <Compile Include="Controls\SelectionGrid.cs" />
     <Compile Include="Controls\ProductOrdering.cs" />
     <Compile Include="Controls\GridItemCollection.cs" />
+    <Compile Include="Screens\BatchBeginOpts.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Threading\" />
@@ -99,10 +100,7 @@ Un juego de controles para MonoGame</Description>
     <MonoDevelop>
       <Properties>
         <Policies>
-          <DotNetNamingPolicy DirectoryNamespaceAssociation="PrefixedHierarchical" ResourceNamePolicy="FileName">
-            <inheritsSet />
-            <inheritsScope />
-          </DotNetNamingPolicy>
+          <DotNetNamingPolicy DirectoryNamespaceAssociation="PrefixedHierarchical" ResourceNamePolicy="FileName" />
         </Policies>
       </Properties>
     </MonoDevelop>
