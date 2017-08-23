@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controls;
 using Moggle.Screens;
 using MonoGame.Extended.ViewportAdapters;
-using Civo.Systems.Controls.General;
 
 namespace Civo
 {
