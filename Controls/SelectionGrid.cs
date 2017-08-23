@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using CE.Collections.Selector;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Moggle.Controls;
 using Moggle.Screens;
 using MonoGame.Extended.Input.InputListeners;
 
-namespace Civo.Systems.Controls.General
+namespace Moggle.Controls
 {
 	/// <summary>
 	/// A generic display of items in a grid.
