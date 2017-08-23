@@ -11,15 +11,16 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ReleaseVersion>1.0.2</ReleaseVersion>
+    <ReleaseVersion>1.0.2.1</ReleaseVersion>
     <PackOnBuild>true</PackOnBuild>
     <PackageId>Moggle</PackageId>
-    <PackageVersion>1.0.2</PackageVersion>
+    <PackageVersion>1.0.2.1</PackageVersion>
     <Authors>Edgar Carballo</Authors>
     <Owners>Edgar Carballo</Owners>
     <PackageTags>monogame</PackageTags>
     <Title>Controles Moggle</Title>
     <Description>Extending Monogame</Description>
+    <PackageReleaseNotes>Fix namespace</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
