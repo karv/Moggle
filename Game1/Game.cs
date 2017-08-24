@@ -13,7 +13,7 @@ namespace Civo
 	public class Game : Moggle.Game
 	{
 		ListenerScreen _scr1;
-		GraphicsDeviceManager _graphics;
+		readonly GraphicsDeviceManager _graphics;
 		Texture2D _solidTexture;
 
 		/// <summary>
