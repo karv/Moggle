@@ -11,6 +11,10 @@ namespace Moggle.Controls
 	/// </summary>
 	public class PickingGrid<T> : Grid<T>
 	{
+		/// <summary>
+		/// If <c>true</c>, clicks won't change the selection.
+		/// </summary>
+		public bool Locked;
 		int _selectedIndex;
 		/// <summary>
 		/// Color of the border, if selected.
@@ -63,7 +67,8 @@ namespace Moggle.Controls
 		/// <param name="itemIndex">index of the clicked item.</param>
 		protected override void OnItemClicked(ControlMouseEventArgs e, int itemIndex)
 		{
-			SelectedIndex = itemIndex;
+			if (!Locked)
+				SelectedIndex = itemIndex;
 			base.OnItemClicked(e, itemIndex);
 		}
 
