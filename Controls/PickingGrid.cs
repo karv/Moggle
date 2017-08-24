@@ -45,6 +45,11 @@ namespace Moggle.Controls
 		}
 
 		/// <summary>
+		/// Gets the selected item.
+		/// </summary>
+		public T Selected => Items[SelectedIndex];
+
+		/// <summary>
 		/// Draws the item.
 		/// </summary>
 		/// <param name="batch">Drawing batch.</param>
