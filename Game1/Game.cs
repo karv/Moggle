@@ -13,7 +13,7 @@ namespace Civo
 	public class Game : Moggle.Game
 	{
 		ListenerScreen _scr1;
-		GraphicsDeviceManager _graphics;
+		readonly GraphicsDeviceManager _graphics;
 		Texture2D _solidTexture;
 
 		/// <summary>
@@ -41,12 +41,13 @@ namespace Civo
 			{ ScreenViewport = new ScalingViewportAdapter(GraphicsDevice, 100, 100) };
 			_scr1.Initialize();
 			var ctrl = new Button(_scr1.MouseListener, _solidTexture) { Location = new Rectangle(0, 0, 10, 10) };
-			var grid = new SelectionGrid<Color>(_scr1.MouseListener)
+			var grid = new PickingGrid<Color>(_scr1.MouseListener)
 			{
 				TextureSelector = SingleColorTexture,
 				Location = new Point(10, 0),
 				GridSize = new CE.Size(2, 2),
-				TileSize = new CE.Size(3, 3)
+				TileSize = new CE.Size(5, 5),
+				SelectedBorderThick = 1
 			};
 			grid.Items.Add(Color.Red);
 			grid.Items.Add(Color.Green);
@@ -55,9 +56,9 @@ namespace Civo
 			{
 				Debug.Write("Click");
 			};
-			grid.ItemClicked += delegate (object sender, Color color)
+			grid.SelectionChanged += delegate
 			{
-				Debug.WriteLine(color);
+				Debug.WriteLine(grid.Items[grid.SelectedIndex]);
 			};
 			_scr1.AddComponent(grid);
 			_scr1.AddComponent(ctrl);
