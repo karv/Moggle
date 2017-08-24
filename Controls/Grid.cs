@@ -7,9 +7,12 @@ using MonoGame.Extended.Input.InputListeners;
 
 namespace Moggle.Controls
 {
+	/// <summary>
+	/// Provides a base class for grid-like controls.
+	/// </summary>
 	public abstract class Grid<T> : ClickableControl, IDrawable
 	{
-		protected readonly List<Texture2D> Textures = new List<Texture2D>();
+		readonly List<Texture2D> _textures = new List<Texture2D>();
 		Func<T, Texture2D> _textureSelector;
 		/// <summary>
 		/// The size if each tile.
@@ -29,7 +32,9 @@ namespace Moggle.Controls
 		/// </summary>
 		public Point Location;
 
+		/// <param name="mouse">Mouse listener</param>
 		protected Grid(MouseListener mouse) : base(mouse) { }
+		/// <param name="screen">Screen</param>
 		protected Grid(ListenerScreen screen) : base(screen.MouseListener) { }
 
 		/// <summary>
@@ -63,9 +68,9 @@ namespace Moggle.Controls
 		/// </summary>
 		protected void RebuildTextures()
 		{
-			Textures.Clear();
+			_textures.Clear();
 			for (int i = 0; i < Items.Count; i++)
-				Textures.Add(TextureSelector(Items[i]));
+				_textures.Add(TextureSelector(Items[i]));
 		}
 
 		/// <summary>
@@ -78,6 +83,9 @@ namespace Moggle.Controls
 			Items.CollectionChanged += LoadTextureEvent;
 		}
 
+		/// <summary>
+		/// Remove suscrptions.
+		/// </summary>
 		protected override void Dispose()
 		{
 			Items.CollectionChanged -= LoadTextureEvent;
@@ -122,9 +130,15 @@ namespace Moggle.Controls
 			}
 		}
 
+		/// <summary>
+		/// Draws the item.
+		/// </summary>
+		/// <param name="batch">Drawing batch.</param>
+		/// <param name="index">Index of the currently drawing item.</param>
+		/// <param name="output">The location of the rendering.</param>
 		protected virtual void DrawItem(SpriteBatch batch, int index, Rectangle output)
 		{
-			batch.Draw(Textures[index], output, Color.White);
+			batch.Draw(_textures[index], output, Color.White);
 		}
 
 		/// <summary>

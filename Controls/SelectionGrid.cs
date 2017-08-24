@@ -66,6 +66,12 @@ namespace Moggle.Controls
 		}
 
 
+		/// <summary>
+		/// Invokes the <see cref="E:Moggle.Controls.Grid`1.ItemClicked" /> event
+		/// and updates selection
+		/// </summary>
+		/// <param name="e">Mouse state event args</param>
+		/// <param name="itemIndex">index of the clicked item.</param>
 		protected override void OnItemClicked(ControlMouseEventArgs e, int itemIndex)
 		{
 			if (AllowSelection)
