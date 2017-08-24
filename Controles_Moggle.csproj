@@ -90,6 +90,8 @@
     <Compile Include="Controls\GridItemCollection.cs" />
     <Compile Include="Screens\BatchBeginOpts.cs" />
     <Compile Include="Controls\ControlMouseEvent.cs" />
+    <Compile Include="Controls\PickingGrid.cs" />
+    <Compile Include="Controls\Grid.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Threading\" />
